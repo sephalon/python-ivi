@@ -4,8 +4,6 @@ Python Interchangeable Virtual Instrument Library
 
 Copyright (c) 2012-2014 Alex Forencich
 
-Modified by Jeff Wurzbach 2014
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -26,36 +24,37 @@ THE SOFTWARE.
 
 """
 
-__all__ = [
-        # Base IVI class
-        "ivi",
-        # IVI abstract classes
-        "scope",
-        "dmm",
-        "fgen",
-        "dcpwr",
-        "swtch",
-        "pwrmeter",
-        "specan",
-        "rfsiggen",
-        "counter",
-        # Extra IVI base classes
-        "extra",
-        # Generic IVI drivers
-        "scpi",
-        # IVI drivers
-        "agilent",
-        "dicon",
-        "chroma",
-        "colby",
-        "ics",
-        "jdsu",
-        "lecroy",
-        "rigol",
-        "tektronix",
-        "testequity",
-        "toellner"]
+from .toellner8840_50 import *
 
-from .ivi import *
-from . import *
-
+class toellner8842_32(toellner8840_50):
+    "Toellner TOE8842-32 IVI DC power supply driver"
+    
+    def __init__(self, *args, **kwargs):
+        self.__dict__.setdefault('_instrument_id', 'TOE8842-32')
+        
+        super(toellner8842_32, self).__init__(*args, **kwargs)
+        
+        self._output_count = 2
+        
+        self._output_spec = [
+            {
+                'range': {
+                    'P6V': (6.18, 5.15)
+                },
+                'ovp_max': 0,
+                'voltage_max': 32,
+                'current_max': 2.5
+            },
+            {
+                'range': {
+                    'P25V': (25.75, 1.03)
+                },
+                'ovp_max': 0,
+                'voltage_max': 32,
+                'current_max': 2.5
+            }
+        ]
+        
+        self._memory_size = 3
+        
+        self._init_outputs()
