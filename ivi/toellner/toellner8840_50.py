@@ -130,8 +130,8 @@ class toellner8840_50(scpi.dcpwr.Base, scpi.dcpwr.Trigger, scpi.dcpwr.SoftwareTr
                 self._interface.update_settings()
         
         # interface clear
-        if not self._driver_operation_simulate:
-            self._clear()
+        #if not self._driver_operation_simulate:
+            #self._clear()
         
         # check ID
         if id_query and not self._driver_operation_simulate:
